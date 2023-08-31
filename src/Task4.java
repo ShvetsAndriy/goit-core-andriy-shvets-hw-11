@@ -9,8 +9,15 @@ public class Task4 {
         long m = (long) Math.pow(2, 48);
         long seed = 0;
 
+        //first variant
         Stream<Long> randomLongNumbers = Stream.iterate(seed, (n) -> linearCongruentGenerator(a, c, m, n));
         randomLongNumbers
+                .limit(10)
+                .peek(System.out::println)
+                .count();
+
+        // second variant (from mentor)
+        getRandom(a, c, m)
                 .limit(10)
                 .peek(System.out::println)
                 .count();
@@ -18,5 +25,9 @@ public class Task4 {
 
     static long linearCongruentGenerator (long a, long c, long m, long randomNumber) {
         return (a * randomNumber + c) % m;
+    }
+
+    static Stream<Long> getRandom(long a, long c, long m) {
+        return Stream.iterate(0L, x -> (a * x + c) % m);
     }
 }
